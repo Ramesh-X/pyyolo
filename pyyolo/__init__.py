@@ -5,7 +5,7 @@ import cv2
 from darknet import c_array, IMAGE, predict_image, get_network_boxes, \
     do_nms_obj, do_nms_sort, free_image, free_detections
 
-__version__ = '0.1.0'
+__version__ = '1.0'
 
 
 def load_image(filename, flags=None):

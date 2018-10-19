@@ -1,19 +1,13 @@
 from setuptools import setup
-from setuptools.command.install import install
-
+from distutils.command.build_ext import build_ext
 from build_darknet import build_darknet
 from pyyolo import __version__
 
 
-def configure():
-    print "This is what hepps"
-
-
-class YoloInstall(install):
+class YoloBuildExt(build_ext):
     def run(self):
-        install.run(self)
-        build_darknet()
-        configure()
+        build_darknet(self)
+        build_ext.run(self)
 
 
 setup(
@@ -25,9 +19,10 @@ setup(
     author_email='rsoft.ramesh@gmail.com',
     license='Proprietary',
     cmdclass={
-        'install': YoloInstall,
+        'build_ext': YoloBuildExt,
     },
     packages=['pyyolo'],
+    data_files=[('', ['pyyolo/libdarknet.so'])],
     include_package_data=True,
     zip_safe=False,
     install_requires=['numpy>=1.14.3']

@@ -5,6 +5,7 @@
 
 DARKNET_HOME=$1
 DOWNLOAD_AGAIN=$2
+HERE=`pwd -P`
 
 command -v git >/dev/null 2>&1 || { echo >&2 "This requires git, but it's not installed.  Aborting.."; exit 1; }
 command -v make >/dev/null 2>&1 || { echo >&2 "This requires make, but it's not installed.  Aborting.."; exit 1; }
@@ -25,4 +26,7 @@ sed -i "1s/.*/OPENCV=$5/" Makefile
 sed -i "1s/.*/OPENMP=$6/" Makefile
 
 make -j$(nproc)
+cp libdarknet.so ${HERE}/pyyolo
+
+
 
