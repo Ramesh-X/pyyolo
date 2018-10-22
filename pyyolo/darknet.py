@@ -8,7 +8,7 @@ from distutils.sysconfig import get_python_lib
 DARKNET_SO = "libdarknet.so"
 
 
-def get_lib_path(lib_name):
+def find_lib_path(lib_name):
     lib_file = None
     try:
         paths = site.getsitepackages()
@@ -21,10 +21,10 @@ def get_lib_path(lib_name):
             raise ValueError()
     except:
         lib_file = os.path.join(get_python_lib(), lib_name)
-
-    if lib_file is None or os.path.isfile(lib_file):
-        return lib_file
-    return None
+    finally:
+        if lib_file is None or os.path.isfile(lib_file):
+            return lib_file
+        return None
 
 
 def sample(probs):
@@ -91,7 +91,8 @@ load_image = None
 rgbgr_image = None
 predict_image = None
 
-lib_path = get_lib_path(DARKNET_SO)
+
+lib_path = find_lib_path(DARKNET_SO)
 if lib_path is not None:
     lib = CDLL(lib_path, RTLD_GLOBAL)
     lib.network_width.argtypes = [c_void_p]
