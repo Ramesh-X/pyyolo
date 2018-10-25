@@ -5,6 +5,7 @@ import cv2
 from darknet import c_array, IMAGE, predict_image, get_network_boxes, \
     do_nms_obj, do_nms_sort, free_image, free_detections
 import darknet
+from yolo_data import BBox, YoloData
 
 __version__ = '1.0'
 
@@ -64,7 +65,7 @@ def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
         for i in range(meta.classes):
             if dets[j].prob[i] > 0:
                 b = dets[j].bbox
-                res.append((meta.names[i], dets[j].prob[i], (b.x, b.y, b.w, b.h)))
+                res.append(YoloData(meta.names[i], BBox(b.x, b.y, b.w, b.h, dets[j].prob[i])))
     res = sorted(res, key=lambda x: -x[1])
     free_detections(dets, num)
     return res
