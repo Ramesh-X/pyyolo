@@ -7,7 +7,7 @@ from darknet import c_array, IMAGE, predict_image, get_network_boxes, \
 import darknet
 from yolo_data import BBox, YoloData
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 
 def load_image(filename, flags=None):

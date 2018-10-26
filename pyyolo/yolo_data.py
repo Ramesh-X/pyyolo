@@ -16,11 +16,11 @@ class BBox(object):
         :param h: height
         :param c: confidence
         """
-        self.x = x  # type: float
-        self.y = y  # type: float
-        self.w = w  # type: float
-        self.h = h  # type: float
-        self.c = c  # type: float
+        self.x = float(x)  # type: float
+        self.y = float(y)  # type: float
+        self.w = float(w)  # type: float
+        self.h = float(h)  # type: float
+        self.c = float(c)  # type: float
 
 
 class YoloData(object):
