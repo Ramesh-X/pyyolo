@@ -13,18 +13,23 @@ def find_lib_path(lib_name):
     try:
         paths = site.getsitepackages()
         for p in paths:
-            file = os.path.join(p, lib_name)
-            if os.path.isfile(file):
-                lib_file = file
-                break
+            for path, _, files in os.walk(p):
+                for name in files:
+                    if name == lib_name:
+                        lib_file = os.path.join(path, name)
+                        break
         if lib_file is None:
             raise ValueError()
     except:
-        lib_file = os.path.join(get_python_lib(), lib_name)
+        for path, _, files in os.walk(get_python_lib()):
+            for name in files:
+                if name == lib_name:
+                    lib_file = os.path.join(path, lib_name)
+                    break
     finally:
         if lib_file is None or os.path.isfile(lib_file):
             return lib_file
-        return None
+    return None
 
 
 def sample(probs):
@@ -93,6 +98,7 @@ predict_image = None
 
 
 lib_path = find_lib_path(DARKNET_SO)
+print lib_path
 if lib_path is not None:
     lib = CDLL(lib_path, RTLD_GLOBAL)
     lib.network_width.argtypes = [c_void_p]
