@@ -3,7 +3,11 @@ A Python Wrapper for Yolo
 
 ## Requirements
 
-This application is tested on Ubuntu 64bit environment. You will need `git` and `make` in order
+This application is tested on Ubuntu 64bit environment. Tested in `python2` environment.
+I have added `typing` support also. Therefore you will get function suggestions when you
+using this library with an IDE. 
+
+You will need `git` and `make` in order
 to build this application.
 
 ```bash
@@ -70,6 +74,19 @@ pip install -U .
 
 ## Examples
 
-Need to add examples and how to use guide
+The `detect` function in darknet can be used to run `YOLO` models. Similar function is defined in
+`pyyolo` module also.
+
+I have given an example code on how to use this with `YOLO`. First you need to download `YOLO`
+weights, cfg files and meta files. `YOLO` [weights](https://pjreddie.com/media/files/yolov3.weights) can be downloaded 
+[from their website](https://pjreddie.com/darknet/yolo/). Other files comes with darknet.
+
+You will need to install `OpenCV` to run this example.
+
+You can download the example code and change the `meta_filepath`, `cfg_filepath` and 
+`weights_filepath`. Then get your image which you will need to detect objects and give
+its path to `image_filepath`.
+
+You can run the code by `python example.py` to visualize the output.
 
 

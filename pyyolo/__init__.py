@@ -1,8 +1,9 @@
 import numpy as np
 from ctypes import *
+from typing import List, Tuple
 
 import cv2
-from darknet import c_array, IMAGE, predict_image, get_network_boxes, \
+from darknet import c_array, IMAGE, METADATA, predict_image, get_network_boxes, \
     do_nms_obj, do_nms_sort, free_image, free_detections
 import darknet
 from yolo_data import BBox, YoloData
@@ -11,6 +12,7 @@ __version__ = '1.1'
 
 
 def load_image(filename, flags=None):
+    # type: (str, int) -> IMAGE
     """
     This will call cv2.imread() with the given arguments and convert
     the resulting numpy array to a darknet image
@@ -25,6 +27,7 @@ def load_image(filename, flags=None):
 
 
 def array_to_image(arr):
+    # type: (np.ndarray) -> IMAGE
     """
     Given image with numpy array will be converted to
     darkent image
@@ -43,6 +46,7 @@ def array_to_image(arr):
 
 
 def classify(net, meta, im):
+    # type: (object, METADATA, IMAGE) -> Tuple[str, float]
     out = predict_image(net, im)
     res = []
     for i in range(meta.classes):
@@ -52,6 +56,7 @@ def classify(net, meta, im):
 
 
 def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
+    # type: (object, METADATA, IMAGE, float, float, float) -> List[YoloData]
     num = c_int(0)
     pnum = pointer(num)
     predict_image(net, im)
@@ -72,17 +77,19 @@ def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
 
 
 def load_net(cfg_filepath, weights_filepath, clear):
+    # type: (str, str, bool) -> object
     """
 
     :param cfg_filepath: cfg file name
     :param weights_filepath: weights file name
-    :param clear: 1 if you want to clear the weights otherwise 0
+    :param clear: True if you want to clear the weights otherwise False
     :return: darknet network object
     """
     return darknet.load_net(cfg_filepath, weights_filepath, clear)
 
 
 def load_meta(meta_filepath):
+    # type: (str) -> METADATA
     """
 
     :param meta_filepath: metadata file path
