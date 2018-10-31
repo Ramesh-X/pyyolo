@@ -21,9 +21,9 @@ if [ "${DOWNLOAD_AGAIN}" -eq "1" ]; then
 fi
 
 sed -i "1s/.*/GPU=$3/" Makefile
-sed -i "1s/.*/CUDNN=$4/" Makefile
-sed -i "1s/.*/OPENCV=$5/" Makefile
-sed -i "1s/.*/OPENMP=$6/" Makefile
+sed -i "2s/.*/CUDNN=$4/" Makefile
+sed -i "3s/.*/OPENCV=$5/" Makefile
+sed -i "4s/.*/OPENMP=$6/" Makefile
 
 make -j$(nproc)
 cp libdarknet.so ${HERE}/pyyolo
