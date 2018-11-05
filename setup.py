@@ -1,7 +1,7 @@
 from setuptools import setup
 from distutils.command.build_ext import build_ext
 from build_darknet import build_darknet
-from pyyolo import __version__
+from pyyolo.version import __version__
 
 
 class YoloBuildExt(build_ext):
@@ -25,5 +25,5 @@ setup(
     data_files=[('', ['pyyolo/libdarknet.so'])],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['numpy>=1.14.3']
+    install_requires=['numpy>=1.14.3', 'typing']
 )

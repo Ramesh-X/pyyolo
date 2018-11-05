@@ -8,8 +8,6 @@ from darknet import c_array, IMAGE, METADATA, predict_image, get_network_boxes, 
 import darknet
 from yolo_data import BBox, YoloData
 
-__version__ = '1.1'
-
 
 def load_image(filename, flags=None):
     # type: (str, int) -> IMAGE
