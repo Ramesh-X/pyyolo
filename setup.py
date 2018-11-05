@@ -1,7 +1,8 @@
 from setuptools import setup
 from distutils.command.build_ext import build_ext
 from build_darknet import build_darknet
-from pyyolo.version import __version__
+
+exec(open('./pyyolo/version.py').read())
 
 
 class YoloBuildExt(build_ext):
