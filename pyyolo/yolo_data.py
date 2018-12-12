@@ -78,8 +78,9 @@ class BBox(object):
 
 
 class YoloData(object):
-    def __init__(self, name, bbox):
-        # type: (str, BBox) -> None
+    def __init__(self, id, name, bbox):
+        # type: (int, str, BBox) -> None
+        self.id = id        # type: int
         self.name = name    # type: str
         self.bbox = bbox    # type: BBox
 

@@ -74,7 +74,7 @@ def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
         for i in range(meta.classes):
             if dets[j].prob[i] > 0:
                 b = dets[j].bbox
-                res.append(YoloData(meta.names[i], BBox(b.x - b.w/2.0, b.y - b.h/2.0, b.w, b.h, dets[j].prob[i])))
+                res.append(YoloData(id=i, name=meta.names[i], bbox=BBox(b.x - b.w/2.0, b.y - b.h/2.0, b.w, b.h, dets[j].prob[i])))
     res = sorted(res, key=lambda x: -x.bbox.c)
     free_detections(dets, num)
     return res

@@ -89,4 +89,6 @@ its path to `image_filepath`.
 
 You can run the code by `python example.py` to visualize the output.
 
+Same way, `example2.py` is there to test this on videos.
+
 
