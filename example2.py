@@ -7,11 +7,12 @@ import cv2
 import numpy as np
 import pyyolo
 
-meta_filepath = "/home/rameshpr/Downloads/darknet_google_server/data/obj.data"
-cfg_filepath = "/home/rameshpr/Downloads/darknet_google_server/cfg/yolo-lb.cfg"
-weights_filepath = "/home/rameshpr/Downloads/darknet_google_server/backup/yolo-v3.weights"
+meta_filepath = "./coco.data"
+cfg_filepath = "./yolo.cfg"
+weights_filepath = "./yolov3.weights"
 
 video_filepath = './test.mp4'
+
 
 meta = pyyolo.load_meta(meta_filepath)
 net = pyyolo.load_net(cfg_filepath, weights_filepath, False)

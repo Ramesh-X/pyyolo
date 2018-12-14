@@ -10,7 +10,7 @@ from typing import List, Tuple
 
 import cv2
 from darknet import c_array, IMAGE, METADATA, predict_image, get_network_boxes, \
-    do_nms_obj, do_nms_sort, free_image, free_detections
+    do_nms_obj, do_nms_sort, free_image, free_detections, ndarray_image
 import darknet
 from yolo_data import BBox, YoloData
 
@@ -35,17 +35,14 @@ def array_to_image(arr):
     """
     Given image with numpy array will be converted to
     darkent image
+    Remember to call free_image(im) function after using this image
 
     :rtype: IMAGE
     :param arr: numpy array
     :return: darknet image
     """
-    c = arr.shape[2]
-    h = arr.shape[0]
-    w = arr.shape[1]
-    arr = np.flip(arr.reshape((-1, 3)).transpose(), 0).flatten() / 255.0
-    data = c_array(c_float, arr)
-    im = IMAGE(w, h, c, data)
+    data = arr.ctypes.data_as(POINTER(c_ubyte))
+    im = ndarray_image(data, arr.ctypes.shape, arr.ctypes.strides)
     return im
 
 
@@ -61,6 +58,17 @@ def classify(net, meta, im):
 
 def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
     # type: (object, METADATA, IMAGE, float, float, float) -> List[YoloData]
+    """
+    Detect the objects in the given image. free_image function is called inside this function.
+    Therefore the input darkent image is not usable after calling this function.
+    :param net:
+    :param meta:
+    :param im:
+    :param thresh:
+    :param hier_thresh:
+    :param nms:
+    :return:
+    """
     num = c_int(0)
     pnum = pointer(num)
     predict_image(net, im)
@@ -76,6 +84,7 @@ def detect(net, meta, im, thresh=.2, hier_thresh=0, nms=.4):
                 b = dets[j].bbox
                 res.append(YoloData(id=i, name=meta.names[i], bbox=BBox(b.x - b.w/2.0, b.y - b.h/2.0, b.w, b.h, dets[j].prob[i])))
     res = sorted(res, key=lambda x: -x.bbox.c)
+    free_image(im)
     free_detections(dets, num)
     return res
 
