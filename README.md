@@ -83,7 +83,7 @@ weights, cfg files and meta files. `YOLO` [weights](https://pjreddie.com/media/f
 
 You will need to install `OpenCV` to run this example.
 
-You can download the example code and change the `meta_filepath`, `cfg_filepath` and 
+You can download the example code and change the `names_filepath`, `cfg_filepath` and 
 `weights_filepath`. Then get your image which you will need to detect objects and give
 its path to `image_filepath`.
 

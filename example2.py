@@ -7,14 +7,14 @@ import cv2
 import numpy as np
 import pyyolo
 
-meta_filepath = "./coco.data"
+names_filepath = "./coco.names"
 cfg_filepath = "./yolo.cfg"
 weights_filepath = "./yolov3.weights"
 
 video_filepath = './test.mp4'
 
 
-meta = pyyolo.load_meta(meta_filepath)
+meta = pyyolo.load_names(names_filepath)
 net = pyyolo.load_net(cfg_filepath, weights_filepath, False)
 cap = cv2.VideoCapture(video_filepath)
 colors = np.random.rand(meta.classes, 3) * 255

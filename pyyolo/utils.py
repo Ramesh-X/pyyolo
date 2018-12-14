@@ -104,11 +104,37 @@ def load_net(cfg_filepath, weights_filepath, clear):
 def load_meta(meta_filepath):
     # type: (str) -> METADATA
     """
-
+    Recommend using load_names(str) function instead.
     :param meta_filepath: metadata file path
     :return: darknet metadata object
     """
     return darknet.load_meta(meta_filepath)
+
+
+def load_names(names_filepath):
+    # type: (str) -> METADATA
+    """
+    Loading metadata from data file (eg: coco.data) is a mess as you need to edit that file also by pointing it to the names file.
+    Using this function you can directly load the names file as METADATA object.
+
+    Older function is still available if you need.
+
+    :param names_filepath: Filepath of the names file. Eg: coco.names
+    :return: darknet metadata object
+    """
+    data = None
+    with open(names_filepath) as f:
+        data = f.readlines()
+    if data is None:
+        raise ValueError("Names file not found.. %s" % names_filepath)
+    n_cls = len(data)
+    p_names = (c_char_p * n_cls)()
+    for cls in range(n_cls):
+        name = data[cls].encode('utf-8')
+        c_name = c_char_p()
+        c_name.value = name[:-1]
+        p_names[cls] = c_name
+    return METADATA(n_cls, cast(p_names, POINTER(c_char_p)))
 
 
 
